@@ -1,18 +1,21 @@
 import React, { useState } from "react"
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import Validation from "./SignupValidation"
 import Axios from "axios"
 import './index.css'
 
 function Signup() {
 
-    const [fullname,setfullname]= useState('')
-    const [username,setusername]= useState('')
-    const [password,setpassword]= useState('')
-    const [repassword,setrepassword]= useState('')
-    const [email,setemail]= useState('')
+    const [fullname, setfullname]= useState('')
+    const [username, setusername]= useState('')
+    const [password, setpassword]= useState('')
+    const [repassword, setrepassword]= useState('')
+    const [email, setemail]= useState('')
 
-    const createUser =() =>{
+    const navigateTo = useNavigate()
+
+    const createUser =(e) =>{
+        e.preventDefault();
         Axios.post('http://localhost:8080/signup', {
             Fullname: fullname,
             Username: username,
@@ -20,7 +23,12 @@ function Signup() {
             RePassword: repassword,
             Email: email,
         }).then(()=>{
-            console.log("tạo tài khoản thành công")
+            navigateTo('/')
+            setfullname('')
+            setusername('')
+            setpassword('')
+            setrepassword('')
+            setemail('')
         })
     }
   return (
