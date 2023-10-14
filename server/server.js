@@ -1,36 +1,40 @@
-const express = require("express");
-const mysql = require("mysql");
-const cors = require("cors");
+const express = require('express'); 
+const app = express(); 
+const port = 8080; 
+const mysql = require('mysql')
+const cors = require('cors')
 
-const app = express();
-app.use(cors());
-app.use(express.json())
 
-const db= mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "signup"
+app.listen(port, function(){
+    console.log("Your app running on port " + port);
 })
 
-app.post('/signup', (req, res)=>{
-    const sql = "INSERT INTO `login` (`fullname`, `username`, `password`, `repassword`, `email`) VALUES ?";
-    const values = [
-        req.body.fullname,
-        req.body.username,
-        req.body.password,
-        req.body.repassword,
-        req.body.email
-    ]
-    db.query(sql,[values], (err,data) => {
+const db = mysql.createConnection({
+    user: 'root',
+    host: 'localhost',
+    password: '',
+    database: 'signup',
+})
+
+app.post('signup', (req, res) =>{
+    const sentFullname = red.body.Fullname
+    const sentUsername = red.body.Username
+    const sentPassword = red.body.Password
+    const sentRePassword = red.body.RePassword
+    const sentEmail = red.body.Email
+
+    const SQL = 'INSERT INTO login(fullname,username,password,repassword,email) VALUES (?,?,?,?,?)'
+
+    const Values = [sentFullname,sentUsername,sentPassword,sentRePassword,sentEmail]
+
+    db.query(SQL, Values, (err, results)=>{
         if(err){
-            return res.json("Error");
+            console.log('KHONG thanh cong')
+                res.send(err)
         }
-        return res.json(data);
-    });
-})
-
-
-app.listen(8081, ()=>{
-    console.log("listenning")
+        else{
+            console.log('thanh cong')
+            res.send({message:'thanh cong'})
+        }
+    })
 })

@@ -1,22 +1,8 @@
 import React, { useState } from "react"
 import {Link} from 'react-router-dom'
-import Validation from "./LoginValidation";
 import './index.css'
 
-function Login() {
-    const [values, setValues] = useState({
-        username:'',
-        password:''
-    })
-    const[errors, setErrors] = useState({})
-    const handleInput=(event) =>{
-        setValues(prev => ({...prev, [event.target.name]: [event.target.values]}))
-    }
-    const handleSubmit=(event) =>{
-        event.preventDefault();
-        setErrors(Validation(values));
-    }
-    
+function Login() { 
   return (
     <div className="d-flex justify-content-center align-item-center vh-100">
         <div class="home shadow-lg">
@@ -25,16 +11,14 @@ function Login() {
             <span id="title">Đăng nhập</span>
             <span id="x">X</span>
         </div>
-        <form action="" onSubmit={handleSubmit} class="text-center" id="form">
+        <form action="" class="text-center" id="form">
             <div className="mb-3">
                 <label htmlFor="username" id="label">Tên đăng nhập</label>
-                <input id="input"type="string" placeholder="truong" onChange={handleInput} className="form-control rounded-0" name="username"/>
-                {errors.username && <span className="text-danger">{errors.username}</span>}
+                <input id="input"type="string" placeholder="truong" className="form-control rounded-0" name="username"/>
             </div>
             <div className="mb-3">
                 <label htmlFor="password" id="label">Mật khẩu</label><span id="forgot"><Link to="/forgot" className="text-decoration-none">Quên mật khẩu?</Link></span>
-                <input id="input" type="string" placeholder="truong123" onChange={handleInput} className="form-control rounded-0" name="password"/>
-                {errors.password && <span className="text-danger">{errors.password}</span>}
+                <input id="input" type="string" placeholder="truong123" className="form-control rounded-0" name="password"/>
             </div>
             <button type='submit' className="btn btn-success" id="send">Đăng nhập</button>
         </form>
